@@ -1,37 +1,36 @@
 import React, { useState } from 'react';
 
-function AddTaskBtn({ handleSubmit }) {
-  const [formData, setFormData] = useState({
+function AddTaskBtn({ addTask }) {
+ 
+  const [showModal, setShowModal] = useState(false);
+  const [taskData, setTaskData] = useState({
     title: '',
     description: '',
     team: '',
     assignees: '',
-    priority: 'p0'
+    priority: 'P0',
+    status: 'Pending'
   });
-  const [showModal, setShowModal] = useState(false);
 
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevData => ({
+    setTaskData((prevData) => ({
       ...prevData,
       [name]: value
     }));
   };
-
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here, e.g., send data to backend
-    handleSubmit(formData);
-    // Clear form data after submission
-    setFormData({
+    addTask(taskData);
+    setShowModal(false);
+    setTaskData({
       title: '',
       description: '',
       team: '',
       assignees: '',
-      priority: 'p0'
+      priority: 'P0',
+      status: 'Pending'
     });
-    // Close modal after form submission
-    setShowModal(false);
   };
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -51,7 +50,7 @@ function AddTaskBtn({ handleSubmit }) {
               <span className="close" onClick={() => setShowModal(false)}>&times;</span>
             </div>
             <div className="at-form">
-              <form onSubmit={handleFormSubmit} className='addtask-form'>
+              <form onSubmit={handleFormSubmit}  className='addtask-form'>
                 <div className="input-fields">
                   <label htmlFor="title">Title</label>
                   <div className="field-aria">
@@ -59,9 +58,10 @@ function AddTaskBtn({ handleSubmit }) {
                       type="text"
                       id='title'
                       name='title'
-                      value={formData.title}
-                      onChange={handleChange}
+                      value={taskData.title}
+                      onChange={handleInputChange}
                       onKeyPress={handleKeyPress}
+                      required
                     />
                   </div>
                 </div>
@@ -71,9 +71,10 @@ function AddTaskBtn({ handleSubmit }) {
                     <textarea
                       id='description'
                       name='description'
-                      value={formData.description}
-                      onChange={handleChange}
+                      value={taskData.description}
+                      onChange={handleInputChange}
                       onKeyPress={handleKeyPress}
+                      required
                     />
                   </div>
                 </div>
@@ -84,9 +85,10 @@ function AddTaskBtn({ handleSubmit }) {
                       type="text"
                       id='team'
                       name='team'
-                      value={formData.team}
-                      onChange={handleChange}
+                      value={taskData.team}
+                      onChange={handleInputChange}
                       onKeyPress={handleKeyPress}
+                      required
                     />
                   </div>
                 </div>
@@ -97,9 +99,10 @@ function AddTaskBtn({ handleSubmit }) {
                       type="text"
                       id='assignees'
                       name='assignees'
-                      value={formData.assignees}
-                      onChange={handleChange}
+                      value={taskData.assignees}
+                      onChange={handleInputChange}
                       onKeyPress={handleKeyPress}
+                      required
                     />
                   </div>
                 </div>
@@ -109,13 +112,33 @@ function AddTaskBtn({ handleSubmit }) {
                     <select
                       name="priority"
                       id='priority'
-                      value={formData.priority}
-                      onChange={handleChange}
+                      value={taskData.priority}
+                      onChange={handleInputChange}
                       onKeyPress={handleKeyPress}
+                      required
                     >
-                      <option value="p0">p0</option>
-                      <option value="p1">p1</option>
-                      <option value="p2">p2</option>
+                      <option value="P0">P0</option>
+                      <option value="P1">P1</option>
+                      <option value="P2">P2</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="input-fields">
+                  <label htmlFor="status">Status</label>
+                  <div className="field-aria">
+                    <select
+                      name="status"
+                      id='status'
+                      value={taskData.status}
+                      onChange={handleInputChange}
+                      onKeyPress={handleKeyPress}
+                      required
+                    >
+                      <option value="Pending">Pending</option>
+                      <option value="InProgress">In Progress</option>
+                      <option value="Completed">Completed</option>
+                      <option value="Deployed">Deployed</option>
+                      <option value="Deferred">Deferred</option>
                     </select>
                   </div>
                 </div>

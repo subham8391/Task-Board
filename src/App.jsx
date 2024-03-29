@@ -9,7 +9,6 @@ function App() {
         <div className="body-section">
           <Header />
           <Body />
-         
         </div>
       </div>
     </>

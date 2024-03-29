@@ -1,6 +1,6 @@
 export const cardData={
     pending: 'Pending',
-    inProgress: 'In-Progress',
+    inprogress: 'In-Progress',
     completed: 'Completed',
     deployed: 'Deployed',
     deferred: 'Deferred'

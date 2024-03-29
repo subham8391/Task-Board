@@ -3,6 +3,17 @@
   padding: 0;
   box-sizing: border-box;
 }
+::-webkit-scrollbar {
+	display: none;
+   }
+   
+   ::-webkit-scrollbar-track {
+	display: none;
+   }
+   
+   ::-webkit-scrollbar-thumb {
+	 display: none;
+   }
 .container{
   width: 100%;
   height: 100vh;
@@ -154,6 +165,7 @@ box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rg
   align-items: center;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  
 }
 .ch-name{
   width: 100%;
@@ -165,29 +177,34 @@ box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rg
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   border-radius: 5px 5px 0 0;
 }
-#pending {
+#Pending {
   background-color: gray;
 }
 
-#in-progress {
+#In-Progress {
   background-color: orange;
 }
 
-#completed {
+#Completed {
   background-color: rgb(35, 151, 0);
 }
 
-#deployed {
+#Deployed {
   background-color: navy;
 }
 
-#deferred {
+#Deferred {
   background-color: #e67382;
 }
 .c-content{
   width: 100%;
   height: 85%;
   padding: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  overflow-y: scroll;
 }
 
 /* Add Task Modal */
@@ -204,6 +221,7 @@ box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rg
   align-items: center;
   -webkit-backdrop-filter: blur(8px); 
   backdrop-filter: blur(8px); 
+  z-index: 7;
 }
 
 .modal-content {
@@ -299,8 +317,10 @@ input[type="text"]{
 .task{
   width: 100%;
   background-color: #cdcdcd;
-  margin-bottom: 5px;
-  
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 .t-head{
   display: flex;
@@ -308,4 +328,207 @@ input[type="text"]{
   justify-content: space-between;
   align-items: center;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.t-desc{
+  width: 100%;
+  text-wrap: wrap;
+  overflow: hidden;
+}
+.action{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: navy;
+  border: none;
+  color: white;
+  font-size: 18px;
+  padding: 1px;
+  position: relative;
+  cursor: pointer;
+  z-index: 1;
+}
+.status{
+  background-color: navy;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.action-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  -webkit-backdrop-filter: blur(8px); 
+  backdrop-filter: blur(8px); 
+  z-index: 2;
+}
+ .Pending {
+  position: relative;
+  top: 60%;
+  left: 28%;
+}
+.In-Progress{
+  position: relative;
+  top: 60%;
+  left: 38%;
+}
+.Completed{
+  position: relative;
+  top: 60%;
+  left: 38%;
+}
+.Deployed{
+  position: relative;
+  top: 60%;
+  left: 48%;
+}
+.Deferred{
+  position: relative;
+  top: 60%;
+  left: 58%;
+}
+.action-content{
+  width: 10vw;
+  height: 15vh;
+  background-color: #cfcfcf;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 5px;
+  padding: 10px;
+}
+.action-content hr{
+  width: 100%;
+  border-bottom: 2px solid rgb(255, 255, 255);
+}
+.edit-btn{
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.delete-btn{
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.delete-content{
+  width: 30vw;
+  height: 30vh;
+  background-color: #fefefe;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+.delete-op{
+  width: 100%;
+  height: 85%;
+  background-color: #eec0c6;
+background-image: linear-gradient(315deg, #eec0c6 0%, #7ee8fa 74%);
+padding: 20px;
+text-transform: capitalize;
+display: flex;
+flex-direction: column;
+gap: 30px;
+}
+.delete-action{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.delete-confirm{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.delete-confirm button{
+  width: 50px;
+  padding: 5px 0 5px 0;
+  background-color: navy;
+  color: white;
+  cursor: pointer;
+  border: none;
+}
+.edit-content {
+  width: 25vw;
+  height: 80vh;
+  background-color: #fefefe;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+.edit-fields{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+}
+.editable-fields{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+}
+.edit-field-aria{
+  width: 100%;
+}
+.editable-field-aria{
+  width: 50%;
+}
+.editable-field-aria input{
+  height: 20px;
+  width: 100%;
+}
+.edit-aria{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.edit-head{
+  width: 100%;
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+.edit-form{
+  width: 100%;
+  height: 90%;
+  background-color: #eec0c6;
+background-image: linear-gradient(315deg, #eec0c6 0%, #7ee8fa 74%);
+padding: 20px;
+}
+.edit-buttons{
+  width: 100%;
+  display: flex;
+  flex-direction:row ;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+.edit-buttons button{
+  width: 50px;
+  padding: 5px 0 5px 0;
+  background-color: navy;
+  color: white;
+  cursor: pointer;
+  border: none;
 }
