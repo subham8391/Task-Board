@@ -8,8 +8,8 @@ function ActionBtn({ idName,task,updateTask,onDelete}) {
   const modalRef = useRef(null);
 
   useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
+    const handleOutsideClick = (e) => {
+      if (modalRef.current && !modalRef.current.contains(e.target)) {
         setShowModal(false);
       }
     };
@@ -21,11 +21,13 @@ function ActionBtn({ idName,task,updateTask,onDelete}) {
     };
   }, []);
 
-  const handleActionClick = (event) => {
-    event.stopPropagation(); 
+  const handleActionClick = (e) => {
+    e.stopPropagation(); 
     setShowModal(true);
   };
-
+const handleClose=()=>{
+  setShowModal(false);
+}
   return (
     <>
       <button className='action' onClick={handleActionClick}>
@@ -35,7 +37,7 @@ function ActionBtn({ idName,task,updateTask,onDelete}) {
       {showModal && (
         <div className="action-modal">
           <div className={`action-content ${idName}`} ref={modalRef}>
-          <EditTaskBtn task={task} updateTask={updateTask} />
+          <EditTaskBtn task={task} updateTask={updateTask} onClose={handleClose}/>
             <hr />
             <DeleteTaskBtn task={task} onDelete={onDelete}/>
           </div>

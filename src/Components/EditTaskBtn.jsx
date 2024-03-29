@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function EditTaskBtn({ task, updateTask }) {
+function EditTaskBtn({ task, updateTask,onClose }) {
   const [formData, setFormData] = useState({ ...task });
   const [showModal, setShowModal] = useState(false);
 
@@ -18,6 +18,7 @@ function EditTaskBtn({ task, updateTask }) {
     updateTask(formData);
     // Close modal after form submission
     setShowModal(false);
+    onClose();
   };
 
   const handleReset = () => {
