@@ -123,7 +123,7 @@ function AddTaskBtn({ addTask }) {
                     </select>
                   </div>
                 </div>
-                <div className="input-fields">
+                {/* <div className="input-fields">
                   <label htmlFor="status">Status</label>
                   <div className="field-aria">
                     <select
@@ -141,8 +141,8 @@ function AddTaskBtn({ addTask }) {
                       <option value="Deferred">Deferred</option>
                     </select>
                   </div>
-                </div>
-                {/* Removed submit button */}
+                </div> */}
+                {/* We can use it for directly chose where we wish to add the task */}
               </form>
             </div>
           </div>

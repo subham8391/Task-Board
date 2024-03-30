@@ -5,7 +5,13 @@ import DeleteTaskBtn from './DeleteTaskBtn';
 
 function ActionBtn({ idName,task,updateTask,onDelete}) {
   const [showModal, setShowModal] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
   const modalRef = useRef(null);
+
+  useEffect(() => {
+    setIsDisabled(task.status.toLowerCase() === 'completed');
+  }, [task.status]);
+
 
   useEffect(() => {
     const handleOutsideClick = (e) => {
@@ -30,7 +36,7 @@ const handleClose=()=>{
 }
   return (
     <>
-      <button className='action' onClick={handleActionClick}>
+      <button className='action' onClick={handleActionClick} disabled={isDisabled}>
         <BsThreeDotsVertical />
       </button>
 

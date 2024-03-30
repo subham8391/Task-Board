@@ -104,13 +104,18 @@ function EditTaskBtn({ task, updateTask,onClose }) {
                   <div className="editable-fields">
                     <label htmlFor="status">Status</label>
                     <div className="editable-field-aria">
-                      <input
-                        type="text"
+                      <select
                         id='status'
                         name='status'
                         value={formData.status}
                         onChange={handleChange}
-                      />
+                      >
+                        <option value="Pending">Pending</option>
+                      <option value="InProgress">In Progress</option>
+                      <option value="Completed">Completed</option>
+                      <option value="Deployed">Deployed</option>
+                      <option value="Deferred">Deferred</option>
+                     </select>
                     </div>
                   </div>
                 </div>

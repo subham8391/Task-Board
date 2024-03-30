@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { cardData } from '../Data';
 import AddTaskBtn from './AddTaskBtn';
 import ActionBtn from './ActionBtn';
+
 function Body() {
   const [tasks, setTasks] = useState({
     pending: [],
@@ -11,7 +12,14 @@ function Body() {
     deferred: []
   });
 
-  //Create Task
+  const [filter, setFilter] = useState({
+    assignee: '',
+    priority: ''
+  });
+
+  const [sortByPriority, setSortByPriority] = useState('');
+
+  // Create Task
   const addTask = (taskData) => {
     setTasks((prevTasks) => ({
       ...prevTasks,
@@ -27,23 +35,22 @@ function Body() {
       const previousStatus = updatedTasks[updatedStatus].filter(
         (task) => task.title !== updatedTask.title
       );
-  
+
       // Remove the task from its previous status
       Object.keys(updatedTasks).forEach((status) => {
         updatedTasks[status] = updatedTasks[status].filter(
           (task) => task.title !== updatedTask.title
         );
       });
-  
+
       // Push the updated task to its new status
       updatedTasks[updatedStatus] = previousStatus.concat(updatedTask);
-  
+
       return updatedTasks;
     });
   };
-  
-  
-  //Delete Task
+
+  // Delete Task
   const deleteTask = (taskToDelete) => {
     setTasks((prevTasks) => {
       const updatedTasks = { ...prevTasks };
@@ -52,7 +59,32 @@ function Body() {
       return updatedTasks;
     });
   };
-  
+
+  // Filtered and Sorted Tasks
+  const filteredTasks = Object.keys(tasks).reduce((filtered, key) => {
+    const filteredByStatus = tasks[key]
+      .filter(task => {
+        return (
+          (filter.assignee === '' || task.assignees.toLowerCase().includes(filter.assignee.toLowerCase())) &&
+          (filter.priority === '' || task.priority.toLowerCase() === filter.priority.toLowerCase())
+        );
+      })
+      .sort((a, b) => {
+        if (sortByPriority === 'p0') {
+          return a.priority.localeCompare(b.priority);
+        } else if (sortByPriority === 'p1') {
+          return b.priority.localeCompare(a.priority);
+        } else {
+          return 0;
+        }
+      });
+
+    return {
+      ...filtered,
+      [key]: filteredByStatus
+    };
+  }, {});
+
   return (
     <>
       <section className="body">
@@ -62,23 +94,34 @@ function Body() {
               <div className="op-top">
                 <div className="filter">
                   <p>Filter By:</p>
-                  <input type="text" id='aName' placeholder='Assignee Name' />
-                  <select id="selectOption" >
+                  <input
+                    type="text"
+                    id="aName"
+                    placeholder="Assignee Name"
+                    value={filter.assignee}
+                    onChange={(e) => setFilter({ ...filter, assignee: e.target.value })}
+                  />
+                  <select
+                    id='PriorityFilter'
+                    value={filter.priority}
+                    onChange={(e) => setFilter({ ...filter, priority: e.target.value })}
+                  >
                     <option value="">Priority</option>
                     <option value="p0">p0</option>
                     <option value="p1">p1</option>
                     <option value="p2">p2</option>
                   </select>
-                  <input
-                    type="date"
-                    id="dateInput"
-                  />
+                  <input type="date" id="dateInput" />
                 </div>
-                <AddTaskBtn addTask={addTask}/>
+                <AddTaskBtn addTask={addTask} />
               </div>
               <div className="op-bottom">
-                <p>Stor By:</p>
-                <select id="selectOption" >
+                <p>Sort By:</p>
+                <select
+                id='sortByPriority'
+                  value={sortByPriority}
+                  onChange={(e) => setSortByPriority(e.target.value)}
+                >
                   <option value="">Priority</option>
                   <option value="p0">p0</option>
                   <option value="p1">p1</option>
@@ -88,23 +131,30 @@ function Body() {
             </div>
           </section>
           <section className="dp-section">
-            {Object.keys(tasks).map((key) => (
+            {Object.keys(filteredTasks).map((key) => (
               <div className="c-card" key={key}>
-                <div className="ch-name" id={cardData[key]}>{cardData[key]}</div>
+                <div className="ch-name" id={cardData[key]}>
+                  {cardData[key]}
+                </div>
                 <div className="c-content">
-                  {tasks[key].map((task, index) => (
+                  {filteredTasks[key].map((task, index) => (
                     <div className="task" key={index}>
                       <div className="t-head">
                         <h3>{task.title}</h3>
-                        <p style={{ backgroundColor: 'navy', color: 'white' }}>{task.priority}</p>
+                        <p className="t-priority">{task.priority}</p>
                       </div>
                       <hr />
-                      <p className='t-desc'>{task.description}</p>
+                      <p className="t-desc">{task.description}</p>
                       <div className="t-head">
                         <h5>@{task.assignees}</h5>
-                        <ActionBtn idName={cardData[key]} task={task} updateTask={updateTask} onDelete={deleteTask} />
+                        <ActionBtn
+                          idName={cardData[key]}
+                          task={task}
+                          updateTask={updateTask}
+                          onDelete={deleteTask}
+                        />
                       </div>
-                      <div className="status">{task.status}</div>
+                      <div className="status">{task.status === 'Pending' ? 'Assign' : task.status}</div>
                     </div>
                   ))}
                 </div>
@@ -114,7 +164,7 @@ function Body() {
         </div>
       </section>
     </>
-  )
+  );
 }
 
-export default Body
+export default Body;
