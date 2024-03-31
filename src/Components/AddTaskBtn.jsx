@@ -11,7 +11,7 @@ function AddTaskBtn({ addTask }) {
     priority: 'P0',
     status: 'Pending'
   });
-
+  const [errorMessage, setErrorMessage] = useState('');
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setTaskData((prevData) => ({
@@ -21,6 +21,15 @@ function AddTaskBtn({ addTask }) {
   };
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    const { title, description, team, assignees } = taskData;
+   // Check if any of the fields are empty
+   if (!title || !description || !team || !assignees) {
+    setErrorMessage('Please fill out all fields');
+    setTimeout(() => {
+      setErrorMessage('');
+    }, 500); 
+    return;
+  }
     const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
     const taskWithDate = {
       ...taskData,
@@ -36,6 +45,7 @@ function AddTaskBtn({ addTask }) {
       priority: 'P0',
       status: 'Pending'
     });
+    setErrorMessage('');
   };
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -129,6 +139,7 @@ function AddTaskBtn({ addTask }) {
                   </div>
                 </div>
                 <button type="submit" className="submit-btn">Submit</button>
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
                 {/* <div className="input-fields">
                   <label htmlFor="status">Status</label>
                   <div className="field-aria">
