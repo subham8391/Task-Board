@@ -21,7 +21,12 @@ function AddTaskBtn({ addTask }) {
   };
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    addTask(taskData);
+    const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
+    const taskWithDate = {
+      ...taskData,
+      dateAdded: currentDate
+    };
+    addTask(taskWithDate);
     setShowModal(false);
     setTaskData({
       title: '',
@@ -123,6 +128,7 @@ function AddTaskBtn({ addTask }) {
                     </select>
                   </div>
                 </div>
+                <button type="submit" className="submit-btn">Submit</button>
                 {/* <div className="input-fields">
                   <label htmlFor="status">Status</label>
                   <div className="field-aria">

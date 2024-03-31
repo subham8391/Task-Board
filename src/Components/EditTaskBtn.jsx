@@ -57,7 +57,7 @@ function EditTaskBtn({ task, updateTask,onClose }) {
                       id='description'
                       name='description'
                       value={formData.description}
-                      readOnly // Make the field read-only
+                      readOnly 
                     />
                   </div>
                 </div>
@@ -69,7 +69,7 @@ function EditTaskBtn({ task, updateTask,onClose }) {
                       id='team'
                       name='team'
                       value={formData.team}
-                      readOnly // Make the field read-only
+                      readOnly
                     />
                   </div>
                 </div>
@@ -81,7 +81,7 @@ function EditTaskBtn({ task, updateTask,onClose }) {
                       id='assignees'
                       name='assignees'
                       value={formData.assignees}
-                      readOnly // Make the field read-only
+                      readOnly 
                     />
                   </div>
                 </div>

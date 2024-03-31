@@ -14,7 +14,8 @@ function Body() {
 
   const [filter, setFilter] = useState({
     assignee: '',
-    priority: ''
+    priority: '',
+    date: ''
   });
 
   const [sortByPriority, setSortByPriority] = useState('');
@@ -66,7 +67,8 @@ function Body() {
       .filter(task => {
         return (
           (filter.assignee === '' || task.assignees.toLowerCase().includes(filter.assignee.toLowerCase())) &&
-          (filter.priority === '' || task.priority.toLowerCase() === filter.priority.toLowerCase())
+          (filter.priority === '' || task.priority.toLowerCase() === filter.priority.toLowerCase())&&
+          (filter.date === '' || task.dateAdded === filter.date)
         );
       })
       .sort((a, b) => {
@@ -85,6 +87,9 @@ function Body() {
     };
   }, {});
 
+  const handleDateInputChange = (e) => {
+    setFilter({ ...filter, date: e.target.value });
+  };
   return (
     <>
       <section className="body">
@@ -94,6 +99,7 @@ function Body() {
               <div className="op-top">
                 <div className="filter">
                   <p>Filter By:</p>
+                  <div className="filter-aria">
                   <input
                     type="text"
                     id="aName"
@@ -111,9 +117,17 @@ function Body() {
                     <option value="p1">p1</option>
                     <option value="p2">p2</option>
                   </select>
-                  <input type="date" id="dateInput" />
+                  <input
+                      type="date"
+                      id="dateInput"
+                      value={filter.date}
+                      onChange={handleDateInputChange} 
+                    />
+                  </div>
                 </div>
+                <div className="top-at-btn">
                 <AddTaskBtn addTask={addTask} />
+                </div>
               </div>
               <div className="op-bottom">
                 <p>Sort By:</p>
@@ -161,6 +175,9 @@ function Body() {
               </div>
             ))}
           </section>
+          <div className="bottom-at-btn">
+          <AddTaskBtn addTask={addTask} />
+          </div>
         </div>
       </section>
     </>
