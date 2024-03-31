@@ -73,13 +73,16 @@ function Body() {
       })
       .sort((a, b) => {
         if (sortByPriority === 'p0') {
-          return a.priority.localeCompare(b.priority);
+          return a.priority === 'P0' ? -1 : (b.priority === 'P0' ? 1 : 0);
         } else if (sortByPriority === 'p1') {
-          return b.priority.localeCompare(a.priority);
+          return a.priority === 'P1' ? -1 : (b.priority === 'P1' ? 1 : 0);
+        } else if (sortByPriority === 'p2') {
+          return a.priority === 'P2' ? -1 : (b.priority === 'P2' ? 1 : 0);
         } else {
           return 0;
         }
       });
+  
 
     return {
       ...filtered,
